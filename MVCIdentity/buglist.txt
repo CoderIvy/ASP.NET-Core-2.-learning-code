@@ -1,0 +1,36 @@
+tutorials: https://docs.microsoft.com/en-us/aspnet/core/security/authentication/add-user-data?view=aspnetcore-2.1&tabs=visual-studio
+	   https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/google-logins?view=aspnetcore-2.1&tabs=aspnetcore2x
+	   https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/facebook-logins?view=aspnetcore-2.1&tabs=aspnetcore2x
+
+
+***Unable to resolve service for type 'Microsoft.AspNetCore.Identity.UserManager` while attempting to activate 'AuthController'
+answer: All SignInManager, UserManager should use same user data (if you want to add custom data in register page, you should use new created AppUser)
+	eg: LoginParitl.cshtml file , startup.cs file, LoginParitl.cshtml use 2 using import package, one for AppIdentityUser, one for signmanager (just keep the original one)
+
+***Scheme already exists: Identity.Application
+answer: comment out "services.AddDefaultIdentity<WebApp2User>().AddEntityFrameworkStores<WebApp2Context>();" in "Areas -> Identity -> IdentityHostingStartup.cs"
+
+***dataset not in model 
+answer: change "public class ApplicationDbContext : IdentityDbContext" to " public class ApplicationDbContext : IdentityDbContext<your new user class which create when scafold> "
+
+***invalid coloum
+answer: add custome column into DB, when applying migration should use the default ApplicationDbContext rather than use new context you create when scafold
+
+***when you add migration to NEW create context and update database. but no coloum inserted to DB
+answer: the -context should use original on ApplicationContext
+
+***If a custom ApplicationUser class is being used, update the class to inherit from IdentityUser. 
+	For example:
+	public class ApplicationDbContext : IdentityDbContext<MVCIdentityUser>
+    	{
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+        	{
+        	}
+    	}
+
+
+
+
+
+

@@ -1,0 +1,7 @@
+use secret manager to set user data by run the following command from the directory in which the .csproj file exists. 
+
+dotnet user-secrets set "Access Name" "value"
+
+retrieved via in Startup.cs -> public void ConfigureServices(IServiceCollection services) method
+
+***ID = Configuration["Access Name"];
